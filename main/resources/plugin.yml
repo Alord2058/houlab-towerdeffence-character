@@ -1,4 +1,0 @@
-name: character
-version: '${version}'
-main: jp.houlab.alord2058.character.Character
-api-version: '1.20'
