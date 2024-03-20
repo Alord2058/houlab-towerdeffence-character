@@ -9,7 +9,7 @@ public final class Character extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         getLogger().info("on");
-        getServer().getPluginManager().registerEvents(new KazenoMatasaburou(), this);
+        getServer().getPluginManager().registerEvents(new KazenoMatasaburou(this), this);
     }
 
     @Override

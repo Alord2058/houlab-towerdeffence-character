@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-group = 'jp.houlab.name'
+group = 'jp.houlab.alord2058'
 version = '1.0-SNAPSHOT'
 
 repositories {
