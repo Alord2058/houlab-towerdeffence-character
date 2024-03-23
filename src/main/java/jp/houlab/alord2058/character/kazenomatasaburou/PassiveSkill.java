@@ -1,12 +1,15 @@
 package jp.houlab.alord2058.character.kazenomatasaburou;
 
 import jp.houlab.alord2058.character.Character;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityToggleGlideEvent;
-import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.*;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 import java.util.Set;
 
 public class PassiveSkill implements Listener {
@@ -87,5 +90,18 @@ public class PassiveSkill implements Listener {
                 }
             }
         }.runTaskTimer(javaplugin,0,1);
+    }
+
+    @EventHandler
+    public void onElytraClick(InventoryClickEvent event) {
+        int grSlot = event.getRawSlot();
+        @NotNull HumanEntity player = event.getWhoClicked();
+        Set<String> tag = player.getScoreboardTags();
+
+        if (tag.contains("kazenomatasaburou")) {
+            if(grSlot == 6) {
+                event.setCancelled(true);
+            }
+        }
     }
 }
