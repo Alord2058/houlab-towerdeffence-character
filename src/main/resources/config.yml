@@ -1,0 +1,7 @@
+kazenomatasaburou:
+  maxEnergy: 80
+  decreaseEnergy: 1
+  rechargeEnergy: 2
+  rechargeEnergyCT: 40
+  minEnergy: 20
+tag: kazenomatasaburou

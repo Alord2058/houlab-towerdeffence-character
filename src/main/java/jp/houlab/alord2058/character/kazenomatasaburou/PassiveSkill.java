@@ -17,7 +17,7 @@ public class PassiveSkill implements Listener {
         this.javaplugin = javaplugin;
     }
 
-    //Count until recharge
+    //Count until EnergyRecharge
     private int count = 0;
 
     //Passive Skill
