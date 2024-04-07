@@ -29,6 +29,8 @@ public class ActiveSkill implements Listener {
                     }
                 }
             }
+        } else {
+            return;
         }
     }
 }

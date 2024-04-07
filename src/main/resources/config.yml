@@ -4,4 +4,12 @@ kazenomatasaburou:
   rechargeEnergy: 2
   rechargeEnergyCT: 40
   minEnergy: 20
-tag: kazenomatasaburou
+  ultHeight: 1.90
+  ultTimer: 110
+  ultCT: 200
+  use_HujinCT: 10
+  vector_ratio: 2
+  tag: kazenomatasaburou
+
+blender:
+  tag: blender
