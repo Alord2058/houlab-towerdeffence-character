@@ -11,7 +11,8 @@ public final class Character extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new jp.houlab.alord2058.character.kazenomatasaburou.PassiveSkill(this), this);
         getServer().getPluginManager().registerEvents(new jp.houlab.alord2058.character.kazenomatasaburou.ActiveSkill(),this);
         getServer().getPluginManager().registerEvents(new jp.houlab.alord2058.character.kazenomatasaburou.UltimateSkill(this),this);
-        getServer().getPluginManager().registerEvents(new jp.houlab.alord2058.character.blender.ActiveSkill(),this);
+        getServer().getPluginManager().registerEvents(new jp.houlab.alord2058.character.blender.Active.ActiveSkill(this),this);
+        getServer().getPluginManager().registerEvents(new jp.houlab.alord2058.character.blender.Ultimate.UltimateSkill(this),this);
     }
 
     @Override

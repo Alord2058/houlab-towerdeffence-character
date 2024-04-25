@@ -1,6 +1,5 @@
 package jp.houlab.alord2058.character.kazenomatasaburou;
 
-import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -8,7 +7,7 @@ import org.bukkit.util.Vector;
 
 import java.util.Set;
 
-public class UltTask extends BukkitRunnable {
+public class UltFlying extends BukkitRunnable {
 
     Player player;
     Set<String> tag;
@@ -17,7 +16,7 @@ public class UltTask extends BukkitRunnable {
     int ultCount;
     int ultCT;
 
-    public UltTask (int ultCount, Player player, Set<String> tag, int timer, ItemStack getBrush, int ultCT) {
+    public UltFlying(int ultCount, Player player, Set<String> tag, int timer, ItemStack getBrush, int ultCT) {
         if (ultCount < 1) {
             throw new IllegalArgumentException("count error.");
         } else {

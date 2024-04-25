@@ -1,4 +1,7 @@
 kazenomatasaburou:
+  tag: kazenomatasaburou
+  ultReadyTag: kazenomatasaburou_UltReady
+  ultTag: kazenomatasaburou_Ulting
   maxEnergy: 80
   decreaseEnergy: 1
   rechargeEnergy: 2
@@ -9,7 +12,10 @@ kazenomatasaburou:
   ultCT: 200
   use_HujinCT: 10
   vector_ratio: 2
-  tag: kazenomatasaburou
+
 
 blender:
   tag: blender
+  ultTag: blender_Ulting
+  cMove_Timer: 20
+  warpGate_Timer: 600
