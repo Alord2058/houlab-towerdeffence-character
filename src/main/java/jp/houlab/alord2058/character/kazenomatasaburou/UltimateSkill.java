@@ -1,6 +1,7 @@
 package jp.houlab.alord2058.character.kazenomatasaburou;
 
 import jp.houlab.alord2058.character.Character;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -48,16 +49,16 @@ public class UltimateSkill implements Listener {
         if (tag.contains("kazenomatasaburou")) {
             if (event.getHand() == EquipmentSlot.HAND) {
                 if (event.getAction().isRightClick()) {
-                    if (isBrush && player.getCooldown(getBrush) == 0 && tag.contains("kazenomatasaburou_UltReady")) {
+                    if (isBrush && player.getCooldown(getBrush) == 0 && !tag.contains("kazenomatasaburou_Ulting")) {
                         Vector vector = player.getLocation().getDirection().multiply(1).setX(-vector_ratio*vx).setY(1).setZ(-vector_ratio*vz);
                         player.setVelocity(vector);
                         player.setCooldown(getBrush, 10);
                         new UltFlying(ultTimer, player, tag, ultTimer, getInMainHandBrush,ultCT).runTaskTimer(javaplugin, 0, 1);
-                        player.removeScoreboardTag("kazenomatasaburou_UltReady");
                         player.addScoreboardTag("kazenomatasaburou_Ulting");
 
                     } else if (isBrush && player.getCooldown(getBrush) == 0 && tag.contains("kazenomatasaburou_Ulting")) {
                         Block getPTargetBlock = player.getTargetBlockExact(100);
+                        String getTeamName = Bukkit.getScoreboardManager().getMainScoreboard().getEntityTeam(player).getName();
 
                         double getPLX = player.getLocation().getX();
                         double getPLY = player.getLocation().getY() + 0.75;
@@ -69,13 +70,13 @@ public class UltimateSkill implements Listener {
 
                         if (getPTargetBlock != null) {
                             Material targetBlockType = getPTargetBlock.getType();
-                            new UltHujinKnockBack(player, tag, ultTimer, getPLX, getPLY, getPLZ, vx, vy, vz, targetBlockType, armorStand).runTaskTimer(javaplugin, 0, 1);
+                            new UltHujinKnockBack(player, tag, ultTimer, getPLX, getPLY, getPLZ, vx, vy, vz, targetBlockType, armorStand, getTeamName).runTaskTimer(javaplugin, 0, 1);
 
                         } else {
-                            new UltHujin(player, tag, ultTimer, getPLX, getPLY, getPLZ, vx, vy, vz, armorStand).runTaskTimer(javaplugin, 0, 1);
+                            new UltHujin(player, tag, ultTimer, getPLX, getPLY, getPLZ, vx, vy, vz, armorStand, getTeamName).runTaskTimer(javaplugin, 0, 1);
                         }
 
-                    } else if (isBrush && player.getCooldown(getBrush) > 0 && tag.contains("kazenomatasaburou_UltReady")) {
+                    } else {
                         event.setCancelled(true);
                     }
                 }

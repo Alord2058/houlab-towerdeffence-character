@@ -2,6 +2,7 @@ package jp.houlab.alord2058.character.blender.Ultimate;
 
 import jp.houlab.alord2058.character.Character;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -13,11 +14,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.scoreboard.Team;
 
 import java.util.Set;
-
-import static java.lang.Math.*;
-import static java.lang.Math.PI;
 
 public class UltimateSkill implements Listener {
 
@@ -27,7 +26,8 @@ public class UltimateSkill implements Listener {
         this.javaplugin = javaplugin;
     }
 
-    SaveTextDisplaySData saveTextDisplaySData = new SaveTextDisplaySData();
+    SaveTextDisplaySData team1SaveTextDisplaySData = new SaveTextDisplaySData();
+    SaveTextDisplaySData team2SaveTextDisplaySData = new SaveTextDisplaySData();
 
     @EventHandler
     public void UltimateDetect(PlayerInteractEvent event) {
@@ -35,70 +35,106 @@ public class UltimateSkill implements Listener {
         Material material = event.getMaterial();
         Set<String> tag = player.getScoreboardTags();
         int warpGate_Timer = this.javaplugin.getConfig().getInt("blender.warpGate_Timer");
+        int warp_CT = this.javaplugin.getConfig().getInt("blender.warp_CT");
+        Team pEntryTeam = Bukkit.getScoreboardManager().getMainScoreboard().getEntityTeam(player);
+        String getTeamString = pEntryTeam.getName();
 
         if (event.getHand() == EquipmentSlot.HAND) {
             if (event.getAction().isRightClick()) {
                 if (material.equals(Material.MUSIC_DISC_5) && player.getCooldown(material) == 0) {
-                    if (tag.contains("blender_Ulting") && tag.contains("blender")) {
-                        double playerYaw = player.getYaw();
-                        double playerPitch = player.getPitch();
+                    if (tag.contains("blender") && tag.contains("blender_Ulting")) {
+                        if(getTeamString.equals("1")) {
 
-                        double vxE = -sin(playerYaw * PI / 180) * cos(playerPitch * PI / 180);
-                        double vzE =  cos(playerYaw * PI / 180) * cos(playerPitch * PI / 180);
+                            double warpXE = player.getX();
+                            double warpYE = player.getY();
+                            double warpZE = player.getZ();
+                            Location warpLocationE = new Location(player.getWorld(), warpXE, warpYE, warpZE);
+                            TextDisplay textDisplayE = (TextDisplay) player.getWorld().spawnEntity(warpLocationE, EntityType.TEXT_DISPLAY);
+                            textDisplayE.setBackgroundColor(Color.fromRGB(0, 0, 0));
+                            textDisplayE.text(Component.text("ABCDEFG"));
+                            textDisplayE.setBillboard(Display.Billboard.CENTER);
 
-                        double warpXE = player.getX();
-                        double warpYE = player.getY();
-                        double warpZE = player.getZ();
-                        Location warpLocationE = new Location(player.getWorld(), warpXE,warpYE,warpZE);
-                        TextDisplay textDisplayE = (TextDisplay) player.getWorld().spawnEntity(warpLocationE, EntityType.TEXT_DISPLAY);
-                        textDisplayE.setBackgroundColor(Color.fromRGB(0, 0, 0));
-                        textDisplayE.text(Component.text("ABCDEFG"));
-                        textDisplayE.setBillboard(Display.Billboard.CENTER);
+                            TextDisplay textDisplayS = team1SaveTextDisplaySData.getTextDisplay();
+                            Location warpLocationS = team1SaveTextDisplaySData.getWarpLocationS();
+                            double warpXS = team1SaveTextDisplaySData.getWarpXS();
+                            double warpYS = team1SaveTextDisplaySData.getWarpYS();
+                            double warpZS = team1SaveTextDisplaySData.getWarpZS();
 
-                        TextDisplay textDisplayS = saveTextDisplaySData.getTextDisplay();
-                        Location warpLocationS = saveTextDisplaySData.getWarpLocationS();
-                        double warpXS = saveTextDisplaySData.getWarpXS();
-                        double warpYS = saveTextDisplaySData.getWarpYS();
-                        double warpZS = saveTextDisplaySData.getWarpZS();
-                        double vxS = saveTextDisplaySData.getVx();
-                        double vzS = saveTextDisplaySData.getVz();
+                            player.sendMessage(String.valueOf(textDisplayS));
+                            player.sendMessage(String.valueOf(warpLocationS));
 
-                        player.sendMessage(String.valueOf(textDisplayS));
-                        player.sendMessage(String.valueOf(warpLocationS));
+                            //warp method
+                            new warpGateTimer(javaplugin, warpLocationS, warpLocationE, warpGate_Timer,warp_CT, textDisplayS, textDisplayE, player,
+                                    warpXS, warpYS, warpZS, warpXE, warpYE, warpZE).runTaskTimer(javaplugin, 0, 1);
 
-                        //warp method
-                        new warpGateTimer(javaplugin, warpLocationS, warpLocationE, warpGate_Timer, textDisplayS, textDisplayE,player,
-                                warpXS,warpYS,warpZS,warpXE,warpYE,warpZE,vxS,vzS,vxE,vzE).runTaskTimer(javaplugin,0,1);
+                            player.removeScoreboardTag("blender_Ulting");
 
-                        player.removeScoreboardTag("blender_Ulting");
+                        } else if (getTeamString.equals("2")) {
 
-                    } else if (tag.contains("blender")) {
-                        double playerYaw = player.getYaw();
-                        double playerPitch = player.getPitch();
+                            double warpXE = player.getX();
+                            double warpYE = player.getY();
+                            double warpZE = player.getZ();
+                            Location warpLocationE = new Location(player.getWorld(), warpXE, warpYE, warpZE);
+                            TextDisplay textDisplayE = (TextDisplay) player.getWorld().spawnEntity(warpLocationE, EntityType.TEXT_DISPLAY);
+                            textDisplayE.setBackgroundColor(Color.fromRGB(0, 0, 0));
+                            textDisplayE.text(Component.text("ABCDEFG"));
+                            textDisplayE.setBillboard(Display.Billboard.CENTER);
 
-                        double vxS = -sin(playerYaw * PI / 180) * cos(playerPitch * PI / 180);
-                        double vzS =  cos(playerYaw * PI / 180) * cos(playerPitch * PI / 180);
+                            TextDisplay textDisplayS = team2SaveTextDisplaySData.getTextDisplay();
+                            Location warpLocationS = team2SaveTextDisplaySData.getWarpLocationS();
+                            double warpXS = team2SaveTextDisplaySData.getWarpXS();
+                            double warpYS = team2SaveTextDisplaySData.getWarpYS();
+                            double warpZS = team2SaveTextDisplaySData.getWarpZS();
 
-                        double warpXS = player.getX();
-                        double warpYS = player.getY();
-                        double warpZS = player.getZ();
-                        Location warpLocationS = new Location(player.getWorld(), warpXS,warpYS,warpZS);
-                        TextDisplay textDisplayS = (TextDisplay) player.getWorld().spawnEntity(warpLocationS, EntityType.TEXT_DISPLAY);
-                        textDisplayS.text(Component.text("ABCDEFG"));
-                        textDisplayS.setBackgroundColor(Color.fromRGB(0, 0, 0));
-                        textDisplayS.setBillboard(Display.Billboard.CENTER);
+                            player.sendMessage(String.valueOf(textDisplayS));
+                            player.sendMessage(String.valueOf(warpLocationS));
 
-                        saveTextDisplaySData.setTextDisplay(textDisplayS);
-                        saveTextDisplaySData.setWarpLocationS(warpLocationS);
-                        saveTextDisplaySData.setWarpXS(warpXS);
-                        saveTextDisplaySData.setWarpYS(warpYS);
-                        saveTextDisplaySData.setWarpZS(warpZS);
-                        saveTextDisplaySData.setVx(vxS);
-                        saveTextDisplaySData.setVz(vzS);
+                            //warp method
+                            new warpGateTimer(javaplugin, warpLocationS, warpLocationE, warpGate_Timer, warp_CT, textDisplayS, textDisplayE, player,
+                                    warpXS, warpYS, warpZS, warpXE, warpYE, warpZE).runTaskTimer(javaplugin, 0, 1);
 
-                        player.sendMessage("ok");
-                        player.addScoreboardTag("blender_Ulting");
+                            player.removeScoreboardTag("blender_Ulting");
+                        }
 
+                    } else if (tag.contains("blender") && !tag.contains("blender_Ulting")) {
+                        if (getTeamString.equals("1")) {
+                            double warpXS = player.getX();
+                            double warpYS = player.getY();
+                            double warpZS = player.getZ();
+                            Location warpLocationS = new Location(player.getWorld(), warpXS,warpYS,warpZS);
+                            TextDisplay textDisplayS = (TextDisplay) player.getWorld().spawnEntity(warpLocationS, EntityType.TEXT_DISPLAY);
+                            textDisplayS.text(Component.text("ABCDEFG"));
+                            textDisplayS.setBackgroundColor(Color.fromRGB(0, 0, 0));
+                            textDisplayS.setBillboard(Display.Billboard.CENTER);
+
+                            team1SaveTextDisplaySData.setTextDisplay(textDisplayS);
+                            team1SaveTextDisplaySData.setWarpLocationS(warpLocationS);
+                            team1SaveTextDisplaySData.setWarpXS(warpXS);
+                            team1SaveTextDisplaySData.setWarpYS(warpYS);
+                            team1SaveTextDisplaySData.setWarpZS(warpZS);
+
+                            player.sendMessage("ok");
+                            player.addScoreboardTag("blender_Ulting");
+
+                        } else if (getTeamString.equals("2")) {
+                            double warpXS = player.getX();
+                            double warpYS = player.getY();
+                            double warpZS = player.getZ();
+                            Location warpLocationS = new Location(player.getWorld(), warpXS,warpYS,warpZS);
+                            TextDisplay textDisplayS = (TextDisplay) player.getWorld().spawnEntity(warpLocationS, EntityType.TEXT_DISPLAY);
+                            textDisplayS.text(Component.text("ABCDEFG"));
+                            textDisplayS.setBackgroundColor(Color.fromRGB(0, 0, 0));
+                            textDisplayS.setBillboard(Display.Billboard.CENTER);
+
+                            team2SaveTextDisplaySData.setTextDisplay(textDisplayS);
+                            team2SaveTextDisplaySData.setWarpLocationS(warpLocationS);
+                            team2SaveTextDisplaySData.setWarpXS(warpXS);
+                            team2SaveTextDisplaySData.setWarpYS(warpYS);
+                            team2SaveTextDisplaySData.setWarpZS(warpZS);
+
+                            player.sendMessage("ok");
+                            player.addScoreboardTag("blender_Ulting");
+                        }
                     }
                 }
             }

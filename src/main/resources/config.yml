@@ -19,3 +19,4 @@ blender:
   ultTag: blender_Ulting
   cMove_Timer: 20
   warpGate_Timer: 600
+  warp_CT: 50

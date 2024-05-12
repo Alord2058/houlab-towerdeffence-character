@@ -44,8 +44,7 @@ public class UltFlying extends BukkitRunnable {
 
              } else {
                  player.setCooldown(getBrush.getType(), ultCT);
-                 player.removeScoreboardTag("ultNow");
-                 player.addScoreboardTag("ultReady");
+                 player.removeScoreboardTag("kazenomatasaburou_Ulting");
                  this.cancel();
              }
          }
