@@ -30,6 +30,7 @@ public class ActiveSkill implements Listener {
         float gYaw = player.getYaw();
         float gPitch = player.getPitch();
 
+        int active_CT = this.javaplugin.getConfig().getInt("blender.active_CT");
         int cMove_Timer = this.javaplugin.getConfig().getInt("blender.cMove_Timer");
 
         if (tag.contains("blender")) {
@@ -44,12 +45,12 @@ public class ActiveSkill implements Listener {
                                 Location location = new Location(player.getWorld(), getBlockX,getBlockY + 1,getBlockZ);
                                 player.teleport(location);
                                 player.setRotation(gYaw,gPitch);
-                                player.setCooldown(getEcho_Shard, 20);
+                                player.setCooldown(getEcho_Shard, active_CT);
 
                                 new CMoveBukkitRunnable(player,cMove_Timer).runTaskTimer(javaplugin,0,1);
 
                             } else {
-                                player.sendMessage("cant tp");
+                                player.sendMessage("cannot teleport");
                             }
 
                         }

@@ -1,6 +1,7 @@
 package jp.houlab.alord2058.character.kazenomatasaburou;
 
 import jp.houlab.alord2058.character.Character;
+import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -37,7 +38,7 @@ public class PassiveSkill implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (tag.contains("kazenomatasaburou")) {
+                if (tag.contains("matasaburo")) {
                     int playerCurrentEnergy = player.getLevel();
                     boolean isGliding = player.isGliding();
 
@@ -60,7 +61,7 @@ public class PassiveSkill implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (tag.contains("kazenomatasaburou")) {
+                if (tag.contains("matasaburo")) {
                     int playerCurrentEnergy = player.getLevel();
                     boolean isGliding = player.isGliding();
 
@@ -95,12 +96,17 @@ public class PassiveSkill implements Listener {
     @EventHandler
     public void onElytraClick(InventoryClickEvent event) {
         int grSlot = event.getRawSlot();
+        ItemStack clickItem = event.getCurrentItem();
         @NotNull HumanEntity player = event.getWhoClicked();
         Set<String> tag = player.getScoreboardTags();
 
-        if (tag.contains("kazenomatasaburou")) {
+        if (tag.contains("matasaburo")) {
             if(grSlot == 6) {
-                event.setCancelled(true);
+                if (clickItem!= null) {
+                    if (clickItem.getType().equals(Material.ELYTRA)) {
+                        event.setCancelled(true);
+                    }
+                }
             }
         }
     }

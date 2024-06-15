@@ -99,7 +99,8 @@ public class warpGateTimer extends BukkitRunnable {
 
 
         } else if (warpGate_Timer == 0) {
-            //textDisplayS,E delete;
+            textDisplayS.remove();
+            textDisplayE.remove();
             this.cancel();
         }
     }

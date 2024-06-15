@@ -57,11 +57,9 @@ public class UltHujin extends BukkitRunnable {
             Location location = new Location(armorStand.getWorld(), getPLX,getPLY + 0.75 ,getPLZ);
             armorStand.teleport(location);
 
-            UltParticleBuilder ultParticleBuilder = new UltParticleBuilder(armorStand);
-            Particle particle = Particle.SWEEP_ATTACK;
-            ultParticleBuilder.worldSpawnParticle(particle,location,1);
+            armorStand.getWorld().spawnParticle(Particle.SWEEP_ATTACK,location,5,0.5,0.5,0.5);
 
-                @NotNull Collection<Player> getNearbyPlayers = armorStand.getWorld().getNearbyPlayers(location,1,1,1);
+            @NotNull Collection<Player> getNearbyPlayers = armorStand.getWorld().getNearbyPlayers(location,1,1,1);
 
             for (Iterator<Player> i = getNearbyPlayers.iterator(); i.hasNext(); ) {
                 Player playerIterator = i.next().getPlayer();
@@ -71,19 +69,23 @@ public class UltHujin extends BukkitRunnable {
                     if (teamName.equals("1") && getTeamName.equals("2")) {
                         if (playerIterator != player) {
                             playerIterator.damage(2);
+                            armorStand.remove();
                         }
 
                     } else if (teamName.equals("2") && getTeamName.equals("1")) {
                         if (playerIterator != player) {
                             playerIterator.damage(2);
+                            armorStand.remove();
                         }
                     }
                 } else {
+                    armorStand.remove();
                     return;
                 }
             }
 
             } else if (ultCount == 0) {
+                armorStand.remove();
                 this.cancel();
         }
     }

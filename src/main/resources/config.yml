@@ -9,14 +9,14 @@ kazenomatasaburou:
   minEnergy: 20
   ultHeight: 1.90
   ultTimer: 110
-  ultCT: 200
+  ultCT: 1800
   use_HujinCT: 10
   vector_ratio: 2
-
 
 blender:
   tag: blender
   ultTag: blender_Ulting
+  active_CT: 400
   cMove_Timer: 20
   warpGate_Timer: 600
   warp_CT: 50

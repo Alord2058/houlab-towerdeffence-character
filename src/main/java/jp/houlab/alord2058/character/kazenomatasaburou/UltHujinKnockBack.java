@@ -1,14 +1,14 @@
 package jp.houlab.alord2058.character.kazenomatasaburou;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Particle;
+import org.bukkit.*;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
+import org.jetbrains.annotations.NotNull;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
@@ -54,18 +54,18 @@ public class UltHujinKnockBack extends BukkitRunnable {
     public void run() {
         if (ultCount > 0) {
             ultCount--;
+
             getPLX += vx;
             getPLY += vy;
             getPLZ += vz;
             Location location = new Location(armorStand.getWorld(), getPLX, getPLY + 0.75, getPLZ);
             armorStand.teleport(location);
 
-            UltParticleBuilder ultParticleBuilder = new UltParticleBuilder(armorStand);
-            Particle particle = Particle.SWEEP_ATTACK;
-            ultParticleBuilder.worldSpawnParticle(particle, location, 1);
+            armorStand.getWorld().spawnParticle(Particle.SWEEP_ATTACK,location,5,0.25,0.25,0.25);
+            armorStand.getWorld().spawnParticle(Particle.DUST_COLOR_TRANSITION,location,10,1,0,1,new Particle.DustTransition(Color.GREEN,Color.LIME,1));
 
             Collection<Player> getNearbyPlayers = armorStand.getWorld().getNearbyPlayers(location, 1, 1, 1);
-            Collection<Player> getNearbyPlayersKB = armorStand.getWorld().getNearbyPlayers(location, 3, 3, 3);
+            Collection<Player> getNearbyPlayersKB = armorStand.getWorld().getNearbyPlayers(location, 5, 5, 5);
 
             for (Iterator<Player> i = getNearbyPlayers.iterator(); i.hasNext(); ) {
                 Player playerIterator = i.next().getPlayer();
@@ -75,35 +75,67 @@ public class UltHujinKnockBack extends BukkitRunnable {
                     if (teamName.equals("1") && getTeamName.equals("2")) {
                         if (playerIterator != player) {
                             playerIterator.damage(2);
+                            armorStand.remove();
                         }
 
                     } else if (teamName.equals("2") && getTeamName.equals("1")) {
                         if (playerIterator != player) {
                             playerIterator.damage(2);
+                            armorStand.remove();
                         }
                     }
                 } else {
+                    armorStand.remove();
                     return;
                 }
             }
 
             if (playerTargetBlock.equals(location.getBlock().getType())) {
-                Particle particleExplosion = Particle.EXPLOSION_LARGE;
-                ultParticleBuilder.worldSpawnParticle(particleExplosion, location, 1);
+
+                UltParticleBuilder ultParticleBuilder = new UltParticleBuilder(armorStand);
+                ultParticleBuilder.worldSpawnParticle(Particle.GUST,
+                                                      Particle.DUST_COLOR_TRANSITION,
+                                                      new Particle.DustTransition(Color.GREEN,Color.LIME, 3),
+                                                      Particle.CLOUD);
+
                 for (Iterator<Player> i = getNearbyPlayersKB.iterator(); i.hasNext(); ) {
                     Player playerIteratorKB = i.next().getPlayer();
+
                     if (playerIteratorKB != null) {
-                        player.sendMessage("knockBack");
-                        Vector vector = playerIteratorKB.getLocation().getDirection().multiply(1).setX(0).setY(2).setZ(0);
-                        playerIteratorKB.setVelocity(vector);
+
+                        double aSX = armorStand.getX();
+                        double aSZ = armorStand.getZ();
+                        double pIKBX = playerIteratorKB.getX();
+                        double pIKBZ = playerIteratorKB.getZ();
+
+                        double prePIKBvX = pIKBX-aSX;
+                        BigDecimal pIKBvXbd = new BigDecimal(String.valueOf(prePIKBvX));
+                        BigDecimal pIKBvXbd1 = pIKBvXbd.setScale(0, RoundingMode.UP);
+                        double pIKBvX = pIKBvXbd1.doubleValue();
+                        double pIKBvX1 = (1/pIKBvX)*1.5;
+
+                        double prePIKBvZ = pIKBZ-aSZ;
+                        BigDecimal pIKBvZbd = new BigDecimal(String.valueOf(prePIKBvZ));
+                        BigDecimal pIKBvZbd1 = pIKBvZbd.setScale(0, RoundingMode.UP);
+                        double pIKBvZ = pIKBvZbd1.doubleValue();
+                        double pIKBvZ1 = (1/pIKBvZ)*1.5;
+
+
+                        Vector playerIteratorKBVec = playerIteratorKB.getLocation().getDirection().multiply(1).setX(pIKBvX1).setY(0.85).setZ(pIKBvZ1);
+                        playerIteratorKB.setVelocity(playerIteratorKBVec);
+                        armorStand.remove();
+
+
                         this.cancel();
                     } else {
+                        armorStand.remove();
                         return;
                     }
                 }
             }
 
         } else if (ultCount == 0) {
+            armorStand.remove();
             this.cancel();
         }
     }

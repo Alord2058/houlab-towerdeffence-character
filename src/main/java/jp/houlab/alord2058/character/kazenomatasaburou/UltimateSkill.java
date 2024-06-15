@@ -1,9 +1,7 @@
 package jp.houlab.alord2058.character.kazenomatasaburou;
 
 import jp.houlab.alord2058.character.Character;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -29,9 +27,9 @@ public class UltimateSkill implements Listener {
     public void ultDetect(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         Set<String> tag = player.getScoreboardTags();
-        Material getBrush = event.getMaterial();
-        boolean isBrush = event.getMaterial().equals(Material.BRUSH);
-        ItemStack getInMainHandBrush = player.getInventory().getItemInMainHand();
+        Material getIronSword = event.getMaterial();
+        boolean isIronSword = event.getMaterial().equals(Material.IRON_SWORD);
+        ItemStack getInMainHandIronSword = player.getInventory().getItemInMainHand();
 
         float gYaw = player.getYaw();
         float gPitch = player.getPitch();
@@ -46,17 +44,19 @@ public class UltimateSkill implements Listener {
         int use_HujinCT = this.javaplugin.getConfig().getInt("kazenomatasaburou.use_HujinCT");
         int vector_ratio = this.javaplugin.getConfig().getInt("kazenomatasaburou.vector_ratio");
 
-        if (tag.contains("kazenomatasaburou")) {
+        if (tag.contains("matasaburo")) {
             if (event.getHand() == EquipmentSlot.HAND) {
                 if (event.getAction().isRightClick()) {
-                    if (isBrush && player.getCooldown(getBrush) == 0 && !tag.contains("kazenomatasaburou_Ulting")) {
+                    if (isIronSword && player.getCooldown(getIronSword) == 0 && !tag.contains("matasaburo_Ulting")) {
                         Vector vector = player.getLocation().getDirection().multiply(1).setX(-vector_ratio*vx).setY(1).setZ(-vector_ratio*vz);
                         player.setVelocity(vector);
-                        player.setCooldown(getBrush, 10);
-                        new UltFlying(ultTimer, player, tag, ultTimer, getInMainHandBrush,ultCT).runTaskTimer(javaplugin, 0, 1);
-                        player.addScoreboardTag("kazenomatasaburou_Ulting");
+                        player.setCooldown(getIronSword, 10);
+                        player.getWorld().spawnParticle(Particle.CRIT_MAGIC,player.getLocation(),25,0.5,0,0.5);
+                        player.getWorld().spawnParticle(Particle.DUST_COLOR_TRANSITION,player.getLocation(),10,0.5,2,0.5,new Particle.DustTransition(Color.GREEN,Color.LIME,1));
+                        new UltFlying(ultTimer, player, tag, ultTimer, getInMainHandIronSword,ultCT).runTaskTimer(javaplugin, 0, 1);
+                        player.addScoreboardTag("matasaburo_Ulting");
 
-                    } else if (isBrush && player.getCooldown(getBrush) == 0 && tag.contains("kazenomatasaburou_Ulting")) {
+                    } else if (isIronSword && player.getCooldown(getIronSword) == 0 && tag.contains("matasaburo_Ulting")) {
                         Block getPTargetBlock = player.getTargetBlockExact(100);
                         String getTeamName = Bukkit.getScoreboardManager().getMainScoreboard().getEntityTeam(player).getName();
 
@@ -66,7 +66,7 @@ public class UltimateSkill implements Listener {
 
                         ArmorStand armorStand = (ArmorStand) player.getWorld().spawnEntity(new Location(player.getWorld(),getPLX,getPLY,getPLZ),EntityType.ARMOR_STAND);
                         armorStand.setVisible(false);
-                        player.setCooldown(getBrush,10);
+                        player.setCooldown(getIronSword,use_HujinCT);
 
                         if (getPTargetBlock != null) {
                             Material targetBlockType = getPTargetBlock.getType();
@@ -75,9 +75,6 @@ public class UltimateSkill implements Listener {
                         } else {
                             new UltHujin(player, tag, ultTimer, getPLX, getPLY, getPLZ, vx, vy, vz, armorStand, getTeamName).runTaskTimer(javaplugin, 0, 1);
                         }
-
-                    } else {
-                        event.setCancelled(true);
                     }
                 }
             }
