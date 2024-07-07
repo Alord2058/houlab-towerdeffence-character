@@ -1,8 +1,7 @@
 package jp.houlab.alord2058.character.blender.Active;
 
 import jp.houlab.alord2058.character.Character;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -43,9 +42,13 @@ public class ActiveSkill implements Listener {
                                 int getBlockY = getPTargetBlock.getY();
                                 int getBlockZ = getPTargetBlock.getZ();
                                 Location location = new Location(player.getWorld(), getBlockX,getBlockY + 1,getBlockZ);
+                                player.getWorld().playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT,0.7F,2F);
                                 player.teleport(location);
                                 player.setRotation(gYaw,gPitch);
                                 player.setCooldown(getEcho_Shard, active_CT);
+                                player.getWorld().playSound(player.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE,1F,2F);
+                                player.getWorld().spawnParticle(Particle.DUST_COLOR_TRANSITION, player.getLocation(), 10, 0.25, 0.5, 0.25,
+                                                                new Particle.DustTransition(Color.BLACK, Color.AQUA, 1));
 
                                 new CMoveBukkitRunnable(player,cMove_Timer).runTaskTimer(javaplugin,0,1);
 

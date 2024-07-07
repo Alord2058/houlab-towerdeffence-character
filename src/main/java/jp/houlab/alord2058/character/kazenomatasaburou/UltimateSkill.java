@@ -38,7 +38,6 @@ public class UltimateSkill implements Listener {
         double vy = -sin(gPitch * PI / 180);
         double vz = cos(gYaw * PI / 180) * cos(gPitch * PI / 180);
 
-        double ultHeight = this.javaplugin.getConfig().getDouble("kazenomatasaburou.ultHeight");
         int ultTimer = this.javaplugin.getConfig().getInt("kazenomatasaburou.ultTimer");
         int ultCT = this.javaplugin.getConfig().getInt("kazenomatasaburou.ultCT");
         int use_HujinCT = this.javaplugin.getConfig().getInt("kazenomatasaburou.use_HujinCT");
@@ -54,6 +53,7 @@ public class UltimateSkill implements Listener {
                         player.getWorld().spawnParticle(Particle.CRIT_MAGIC,player.getLocation(),25,0.5,0,0.5);
                         player.getWorld().spawnParticle(Particle.DUST_COLOR_TRANSITION,player.getLocation(),10,0.5,2,0.5,new Particle.DustTransition(Color.GREEN,Color.LIME,1));
                         new UltFlying(ultTimer, player, tag, ultTimer, getInMainHandIronSword,ultCT).runTaskTimer(javaplugin, 0, 1);
+                        player.getWorld().playSound(player.getLocation(),Sound.BLOCK_CAVE_VINES_HIT,1F,0.7F);
                         player.addScoreboardTag("matasaburo_Ulting");
 
                     } else if (isIronSword && player.getCooldown(getIronSword) == 0 && tag.contains("matasaburo_Ulting")) {
@@ -67,6 +67,9 @@ public class UltimateSkill implements Listener {
                         ArmorStand armorStand = (ArmorStand) player.getWorld().spawnEntity(new Location(player.getWorld(),getPLX,getPLY,getPLZ),EntityType.ARMOR_STAND);
                         armorStand.setVisible(false);
                         player.setCooldown(getIronSword,use_HujinCT);
+                        player.getWorld().playSound(player.getLocation(),Sound.ENTITY_ENDER_DRAGON_FLAP,1F,1.5F);
+                        player.getWorld().playSound(player.getLocation(),Sound.ENTITY_BREEZE_IDLE_AIR,1F,0.1F);
+                        player.getWorld().playSound(player.getLocation(),Sound.ENTITY_BREEZE_IDLE_GROUND,1F,1F);
 
                         if (getPTargetBlock != null) {
                             Material targetBlockType = getPTargetBlock.getType();

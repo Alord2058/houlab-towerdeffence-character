@@ -28,7 +28,7 @@ public class ActiveSkill implements Listener {
                         player.setVelocity(vector);
                         player.getWorld().spawnParticle(Particle.CRIT,player_Location,25,0.5,0,0.5);
                         player.getWorld().spawnParticle(Particle.DUST_COLOR_TRANSITION,player_Location,10,0.5,2,0.5,new Particle.DustTransition(Color.GREEN,Color.LIME,1));
-
+                        player.getWorld().playSound(player_Location,Sound.BLOCK_CAVE_VINES_HIT,1F,0.7F);
                     }
                 }
             }

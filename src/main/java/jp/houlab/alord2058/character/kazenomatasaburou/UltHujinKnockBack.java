@@ -5,7 +5,6 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
-import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -75,12 +74,14 @@ public class UltHujinKnockBack extends BukkitRunnable {
                     if (teamName.equals("1") && getTeamName.equals("2")) {
                         if (playerIterator != player) {
                             playerIterator.damage(2);
+                            playerIterator.getWorld().playSound(playerIterator.getLocation(),Sound.ENTITY_EVOKER_FANGS_ATTACK,1F,2F);
                             armorStand.remove();
                         }
 
                     } else if (teamName.equals("2") && getTeamName.equals("1")) {
                         if (playerIterator != player) {
                             playerIterator.damage(2);
+                            playerIterator.getWorld().playSound(playerIterator.getLocation(),Sound.ENTITY_EVOKER_FANGS_ATTACK,1F,2F);
                             armorStand.remove();
                         }
                     }
@@ -120,7 +121,8 @@ public class UltHujinKnockBack extends BukkitRunnable {
                         double pIKBvZ = pIKBvZbd1.doubleValue();
                         double pIKBvZ1 = (1/pIKBvZ)*1.5;
 
-
+                        player.getWorld().playSound(player.getLocation(),Sound.ENTITY_WARDEN_ATTACK_IMPACT,1F,1F);
+                        player.getWorld().playSound(player.getLocation(),Sound.ENTITY_DRAGON_FIREBALL_EXPLODE,1F,1.1F);
                         Vector playerIteratorKBVec = playerIteratorKB.getLocation().getDirection().multiply(1).setX(pIKBvX1).setY(0.85).setZ(pIKBvZ1);
                         playerIteratorKB.setVelocity(playerIteratorKBVec);
                         armorStand.remove();

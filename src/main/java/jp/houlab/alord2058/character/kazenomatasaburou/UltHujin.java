@@ -3,6 +3,7 @@ package jp.houlab.alord2058.character.kazenomatasaburou;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -69,12 +70,14 @@ public class UltHujin extends BukkitRunnable {
                     if (teamName.equals("1") && getTeamName.equals("2")) {
                         if (playerIterator != player) {
                             playerIterator.damage(2);
+                            playerIterator.getWorld().playSound(playerIterator.getLocation(), Sound.ENTITY_EVOKER_FANGS_ATTACK,1F,2F);
                             armorStand.remove();
                         }
 
                     } else if (teamName.equals("2") && getTeamName.equals("1")) {
                         if (playerIterator != player) {
                             playerIterator.damage(2);
+                            playerIterator.getWorld().playSound(playerIterator.getLocation(),Sound.ENTITY_EVOKER_FANGS_ATTACK,1F,2F);
                             armorStand.remove();
                         }
                     }
