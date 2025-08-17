@@ -41,8 +41,8 @@ public class UltimateSkill implements Listener {
 
         if (event.getHand() == EquipmentSlot.HAND) {
             if (event.getAction().isRightClick()) {
-                if (material.equals(Material.MUSIC_DISC_5) && player.getCooldown(material) == 0) {
-                    if (tag.contains("blender") && !tag.contains("blender_Ulting")) {
+                if (material.equals(Material.RECOVERY_COMPASS) && player.getCooldown(material) == 0) {
+                    if (!tag.contains("blender_Ulting")) {
 
                         Blender_ult_LocationS.put(player,player.getLocation());
                         Location location = Blender_ult_LocationS.get(player);
@@ -56,7 +56,7 @@ public class UltimateSkill implements Listener {
                         player.addScoreboardTag("blender_Ulting");
                         new PrePortalParticleRunnable(particle_Location, player, tag, ult_CT,material).runTaskTimer(javaplugin, 0, 1);
 
-                    } else if (tag.contains("blender") && tag.contains("blender_Ulting")) {
+                    } else {
                         Location location = Blender_ult_LocationS.get(player);
                         double locationS_getX = location.getX();
                         double locationS_getY = location.getY();

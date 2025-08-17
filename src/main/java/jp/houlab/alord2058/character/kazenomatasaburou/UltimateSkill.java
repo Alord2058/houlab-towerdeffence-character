@@ -27,9 +27,9 @@ public class UltimateSkill implements Listener {
     public void ultDetect(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         Set<String> tag = player.getScoreboardTags();
-        Material getIronSword = event.getMaterial();
-        boolean isIronSword = event.getMaterial().equals(Material.IRON_SWORD);
-        ItemStack getInMainHandIronSword = player.getInventory().getItemInMainHand();
+        Material getBrush = event.getMaterial();
+        boolean isBrush = event.getMaterial().equals(Material.BRUSH);
+        ItemStack getInMainHandBrush = player.getInventory().getItemInMainHand();
 
         float gYaw = player.getYaw();
         float gPitch = player.getPitch();
@@ -43,47 +43,45 @@ public class UltimateSkill implements Listener {
         int use_HujinCT = this.javaplugin.getConfig().getInt("kazenomatasaburou.use_HujinCT");
         int vector_ratio = this.javaplugin.getConfig().getInt("kazenomatasaburou.vector_ratio");
 
-        if (tag.contains("matasaburo")) {
-            if (event.getHand() == EquipmentSlot.HAND) {
-                if (event.getAction().isRightClick()) {
-                    if (isIronSword && player.getCooldown(getIronSword) == 0 && !tag.contains("matasaburo_Ulting")) {
-                        Vector vector = player.getLocation().getDirection().multiply(1).setX(-vector_ratio*vx).setY(1).setZ(-vector_ratio*vz);
-                        player.setVelocity(vector);
-                        player.setCooldown(getIronSword, 10);
-                        player.getWorld().spawnParticle(Particle.CRIT_MAGIC,player.getLocation(),25,0.5,0,0.5);
-                        player.getWorld().spawnParticle(Particle.DUST_COLOR_TRANSITION,player.getLocation(),10,0.5,2,0.5,new Particle.DustTransition(Color.GREEN,Color.LIME,1));
-                        new UltFlying(ultTimer, player, tag, ultTimer, getInMainHandIronSword,ultCT).runTaskTimer(javaplugin, 0, 1);
-                        player.getWorld().playSound(player.getLocation(),Sound.BLOCK_CAVE_VINES_HIT,1F,0.7F);
-                        player.addScoreboardTag("matasaburo_Ulting");
+        if (event.getHand() == EquipmentSlot.HAND) {
+            if (event.getAction().isRightClick()) {
+                if (isBrush && player.getCooldown(getBrush) == 0 && !tag.contains("matasaburo_Ulting")) {
+                    Vector vector = player.getLocation().getDirection().multiply(1).setX(-vector_ratio*vx).setY(1).setZ(-vector_ratio*vz);
+                    player.setVelocity(vector);
+                    player.setCooldown(getBrush, 10);
+                    player.getWorld().spawnParticle(Particle.CRIT_MAGIC,player.getLocation(),25,0.5,0,0.5);
+                    player.getWorld().spawnParticle(Particle.DUST_COLOR_TRANSITION,player.getLocation(),10,0.5,2,0.5,new Particle.DustTransition(Color.GREEN,Color.LIME,1));
+                    new UltFlying(ultTimer, player, tag, ultTimer, getInMainHandBrush,ultCT).runTaskTimer(javaplugin, 0, 1);
+                    player.getWorld().playSound(player.getLocation(),Sound.BLOCK_CAVE_VINES_HIT,1F,0.7F);
+                    player.addScoreboardTag("matasaburo_Ulting");
 
-                    } else if (isIronSword && player.getCooldown(getIronSword) == 0 && tag.contains("matasaburo_Ulting")) {
-                        Block getPTargetBlock = player.getTargetBlockExact(100);
-                        String getTeamName = Bukkit.getScoreboardManager().getMainScoreboard().getEntityTeam(player).getName();
+                } else if (isBrush && player.getCooldown(getBrush) == 0 && tag.contains("matasaburo_Ulting")) {
+                    Block getPTargetBlock = player.getTargetBlockExact(100);
 
-                        double getPLX = player.getLocation().getX();
-                        double getPLY = player.getLocation().getY() + 0.75;
-                        double getPLZ = player.getLocation().getZ();
+                    double getPLX = player.getLocation().getX();
+                    double getPLY = player.getLocation().getY() + 0.75;
+                    double getPLZ = player.getLocation().getZ();
 
-                        ArmorStand armorStand = (ArmorStand) player.getWorld().spawnEntity(new Location(player.getWorld(),getPLX,getPLY,getPLZ),EntityType.ARMOR_STAND);
-                        armorStand.setVisible(false);
-                        player.setCooldown(getIronSword,use_HujinCT);
-                        player.getWorld().playSound(player.getLocation(),Sound.ENTITY_ENDER_DRAGON_FLAP,1F,1.5F);
-                        player.getWorld().playSound(player.getLocation(),Sound.ENTITY_BREEZE_IDLE_AIR,1F,0.1F);
-                        player.getWorld().playSound(player.getLocation(),Sound.ENTITY_BREEZE_IDLE_GROUND,1F,1F);
+                    ArmorStand armorStand = (ArmorStand) player.getWorld().spawnEntity(new Location(player.getWorld(),getPLX,getPLY,getPLZ),EntityType.ARMOR_STAND);
+                    armorStand.setVisible(false);
+                    player.setCooldown(getBrush,use_HujinCT);
+                    player.getWorld().playSound(player.getLocation(),Sound.ENTITY_ENDER_DRAGON_FLAP,1F,1.5F);
+                    player.getWorld().playSound(player.getLocation(),Sound.ENTITY_BREEZE_IDLE_AIR,1F,0.1F);
+                    player.getWorld().playSound(player.getLocation(),Sound.ENTITY_BREEZE_IDLE_GROUND,1F,1F);
 
-                        if (getPTargetBlock != null) {
-                            Material targetBlockType = getPTargetBlock.getType();
-                            new UltHujinKnockBack(player, tag, ultTimer, getPLX, getPLY, getPLZ, vx, vy, vz, targetBlockType, armorStand, getTeamName).runTaskTimer(javaplugin, 0, 1);
+                    if (getPTargetBlock != null) {
+                        Material targetBlockType = getPTargetBlock.getType();
+                        new UltHujinKnockBack(player, tag, ultTimer, getPLX, getPLY, getPLZ, vx, vy, vz, targetBlockType, armorStand).runTaskTimer(javaplugin, 0, 1);
 
-                        } else {
-                            new UltHujin(player, tag, ultTimer, getPLX, getPLY, getPLZ, vx, vy, vz, armorStand, getTeamName).runTaskTimer(javaplugin, 0, 1);
-                        }
+                    } else {
+                        new UltHujin(player, tag, ultTimer, getPLX, getPLY, getPLZ, vx, vy, vz, armorStand).runTaskTimer(javaplugin, 0, 1);
                     }
                 }
             }
         }
     }
 }
+
 
 
 

@@ -6,7 +6,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 
@@ -22,13 +21,17 @@ public class MatasaburoDeathEvent implements Listener {
     public void PlayerDeathEvent(PlayerDeathEvent event) {
         Player player = event.getPlayer();
         int ultCT = this.javaplugin.getConfig().getInt("kazenomatasaburou.ultCT");
-        @NotNull Material getIronSword = player.getInventory().getItemInMainHand().getType();
+        int getBrushCT = player.getCooldown(Material.BRUSH);
+        int getFeatherCT = player.getCooldown(Material.FEATHER);
+        Set<String> tag = player.getScoreboardTags();
 
-        @NotNull Set<String> tag = player.getScoreboardTags();
-
-        if (tag.contains("matasaburo")) {
+        if (getBrushCT > 0 && tag.contains("matasaburo_Ulting")) {
+            player.setCooldown(Material.BRUSH, ultCT);
             player.removeScoreboardTag("matasaburo_Ulting");
-            player.setCooldown(getIronSword, ultCT);
+        }
+
+        if (getFeatherCT > 0) {
+            player.setCooldown(Material.FEATHER, ultCT);
         }
     }
 }

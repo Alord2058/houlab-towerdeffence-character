@@ -25,11 +25,10 @@ public class UltHujinKnockBack extends BukkitRunnable {
     double vz;
     Material playerTargetBlock;
     ArmorStand armorStand;
-    String teamName;
 
     public UltHujinKnockBack(Player player, Set<String> tag, int ultCount,
                              double getPLX, double getPLY, double getPLZ, double vx, double vy, double vz,
-                             Material playerTargetBlock, ArmorStand armorStand, String teamName) {
+                             Material playerTargetBlock, ArmorStand armorStand) {
         if (ultCount < 1) {
             throw new IllegalArgumentException("count error.");
         } else {
@@ -46,7 +45,6 @@ public class UltHujinKnockBack extends BukkitRunnable {
         this.vz = vz;
         this.playerTargetBlock = playerTargetBlock;
         this.armorStand = armorStand;
-        this.teamName = teamName;
     }
 
     @Override
@@ -69,21 +67,16 @@ public class UltHujinKnockBack extends BukkitRunnable {
             for (Iterator<Player> i = getNearbyPlayers.iterator(); i.hasNext(); ) {
                 Player playerIterator = i.next().getPlayer();
                 if (playerIterator != null) {
-                    String getTeamName = Bukkit.getScoreboardManager().getMainScoreboard().getEntityTeam(playerIterator).getName();
+                    if (playerIterator != player) {
+                        playerIterator.damage(10,player);
+                        playerIterator.getWorld().playSound(playerIterator.getLocation(),Sound.ENTITY_EVOKER_FANGS_ATTACK,1F,2F);
+                        armorStand.remove();
+                    }
 
-                    if (teamName.equals("1") && getTeamName.equals("2")) {
-                        if (playerIterator != player) {
-                            playerIterator.damage(2);
-                            playerIterator.getWorld().playSound(playerIterator.getLocation(),Sound.ENTITY_EVOKER_FANGS_ATTACK,1F,2F);
-                            armorStand.remove();
-                        }
-
-                    } else if (teamName.equals("2") && getTeamName.equals("1")) {
-                        if (playerIterator != player) {
-                            playerIterator.damage(2);
-                            playerIterator.getWorld().playSound(playerIterator.getLocation(),Sound.ENTITY_EVOKER_FANGS_ATTACK,1F,2F);
-                            armorStand.remove();
-                        }
+                    if (playerIterator != player) {
+                        playerIterator.damage(10,player);
+                        playerIterator.getWorld().playSound(playerIterator.getLocation(),Sound.ENTITY_EVOKER_FANGS_ATTACK,1F,2F);
+                        armorStand.remove();
                     }
                 } else {
                     armorStand.remove();
@@ -123,7 +116,7 @@ public class UltHujinKnockBack extends BukkitRunnable {
 
                         player.getWorld().playSound(player.getLocation(),Sound.ENTITY_WARDEN_ATTACK_IMPACT,1F,1F);
                         player.getWorld().playSound(player.getLocation(),Sound.ENTITY_DRAGON_FIREBALL_EXPLODE,1F,1.1F);
-                        Vector playerIteratorKBVec = playerIteratorKB.getLocation().getDirection().multiply(1).setX(pIKBvX1).setY(0.85).setZ(pIKBvZ1);
+                        Vector playerIteratorKBVec = playerIteratorKB.getLocation().getDirection().multiply(1).setX(pIKBvX1).setY(3.00).setZ(pIKBvZ1);
                         playerIteratorKB.setVelocity(playerIteratorKBVec);
                         armorStand.remove();
 

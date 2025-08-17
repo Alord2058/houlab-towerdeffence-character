@@ -1,6 +1,5 @@
 package jp.houlab.alord2058.character.kazenomatasaburou;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
@@ -25,11 +24,10 @@ public class UltHujin extends BukkitRunnable {
     double vy;
     double vz;
     ArmorStand armorStand;
-    String teamName;
 
     public UltHujin (Player player, Set<String> tag, int ultCount,
                      double getPLX, double getPLY, double getPLZ, double vx, double vy, double vz,
-                     ArmorStand armorStand, String teamName) {
+                     ArmorStand armorStand) {
         if (ultCount < 1) {
             throw new IllegalArgumentException("count error.");
         } else {
@@ -45,7 +43,6 @@ public class UltHujin extends BukkitRunnable {
         this.vy = vy;
         this.vz = vz;
         this.armorStand = armorStand;
-        this.teamName = teamName;
     }
 
     @Override
@@ -65,22 +62,18 @@ public class UltHujin extends BukkitRunnable {
             for (Iterator<Player> i = getNearbyPlayers.iterator(); i.hasNext(); ) {
                 Player playerIterator = i.next().getPlayer();
                 if (playerIterator != null) {
-                    String getTeamName = Bukkit.getScoreboardManager().getMainScoreboard().getEntityTeam(playerIterator).getName();
-
-                    if (teamName.equals("1") && getTeamName.equals("2")) {
-                        if (playerIterator != player) {
-                            playerIterator.damage(2);
-                            playerIterator.getWorld().playSound(playerIterator.getLocation(), Sound.ENTITY_EVOKER_FANGS_ATTACK,1F,2F);
-                            armorStand.remove();
-                        }
-
-                    } else if (teamName.equals("2") && getTeamName.equals("1")) {
-                        if (playerIterator != player) {
-                            playerIterator.damage(2);
-                            playerIterator.getWorld().playSound(playerIterator.getLocation(),Sound.ENTITY_EVOKER_FANGS_ATTACK,1F,2F);
-                            armorStand.remove();
-                        }
+                    if (playerIterator != player) {
+                        playerIterator.damage(20,player);
+                        playerIterator.getWorld().playSound(playerIterator.getLocation(), Sound.ENTITY_EVOKER_FANGS_ATTACK,1F,2F);
+                        armorStand.remove();
                     }
+
+                    if (playerIterator != player) {
+                        playerIterator.damage(20,player);
+                        playerIterator.getWorld().playSound(playerIterator.getLocation(),Sound.ENTITY_EVOKER_FANGS_ATTACK,1F,2F);
+                        armorStand.remove();
+                    }
+
                 } else {
                     armorStand.remove();
                     return;

@@ -17,6 +17,7 @@ blender:
   tag: blender
   ultTag: blender_Ulting
   active_CT: 400
+  cancel_CT: 20
   cMove_Timer: 20
   portal_Timer: 600
   warp_CT: 50

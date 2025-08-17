@@ -1,7 +1,6 @@
 package jp.houlab.alord2058.character.blender.Utility;
 
 import jp.houlab.alord2058.character.Character;
-import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -9,7 +8,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
-import java.util.Set;
 
 public class ItemHeldEvent implements Listener {
 
@@ -22,19 +20,16 @@ public class ItemHeldEvent implements Listener {
     @EventHandler
     public void onPlayerItemHeldEvent(PlayerItemHeldEvent event) {
         Player player = event.getPlayer();
-        Set<String> tag = player.getScoreboardTags();
         Block getPTargetBlock = player.getTargetBlockExact(20);
 
         int currently_Slot = event.getNewSlot();
         @Nullable ItemStack mainHand = player.getInventory().getItem(currently_Slot);
 
-        if (tag.contains("blender")) {
-            if (mainHand != null) {
-                if (mainHand.toString().contains("ECHO_SHARD")) {
-                    if (getPTargetBlock != null) {
-                        if (getPTargetBlock.getRelative(0, 1, 0).getType().isEmpty() && getPTargetBlock.getRelative(0, 2, 0).getType().isEmpty()) {
-                            new DisplayTeleportSpace(player).runTaskTimer(javaplugin, 0, 1);
-                        }
+        if (mainHand != null) {
+            if (mainHand.toString().contains("ECHO_SHARD")) {
+                if (getPTargetBlock != null) {
+                    if (getPTargetBlock.getRelative(0, 1, 0).getType().isEmpty() && getPTargetBlock.getRelative(0, 2, 0).getType().isEmpty()) {
+                        new DisplayTeleportSpace(player).runTaskTimer(javaplugin, 0, 1);
                     }
                 }
             }
