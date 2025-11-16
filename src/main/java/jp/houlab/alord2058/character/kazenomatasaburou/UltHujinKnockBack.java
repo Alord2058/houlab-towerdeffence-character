@@ -100,9 +100,6 @@ public class UltHujinKnockBack extends BukkitRunnable {
                         String tranceETPlayerKB = String.valueOf(playerIteratorKB.getScoreboard().getEntityTeam(playerIteratorKB));
 
                         if(!tranceETPlayer.equals(tranceETPlayerKB)) {
-
-                            player.sendMessage(String.valueOf(player.getScoreboard().getEntityTeam(player)));
-                            playerIteratorKB.sendMessage(String.valueOf(playerIteratorKB.getScoreboard().getEntityTeam(playerIteratorKB)));
                             double aSX = armorStand.getX();
                             double aSZ = armorStand.getZ();
                             double pIKBX = playerIteratorKB.getX();
@@ -129,7 +126,6 @@ public class UltHujinKnockBack extends BukkitRunnable {
                             this.cancel();
 
                         } else {
-                            player.sendMessage(String.valueOf(player.getScoreboard().getEntityTeam(player)));
                             player.getWorld().playSound(player.getLocation(), Sound.ENTITY_WARDEN_ATTACK_IMPACT, 1F, 1F);
                             player.getWorld().playSound(player.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1F, 1.1F);
                             Vector playerIteratorKBVec = playerIteratorKB.getLocation().getDirection().multiply(1).setX(0).setY(2.00).setZ(0);
