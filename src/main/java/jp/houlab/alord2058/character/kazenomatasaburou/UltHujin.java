@@ -1,5 +1,6 @@
 package jp.houlab.alord2058.character.kazenomatasaburou;
 
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
@@ -56,6 +57,7 @@ public class UltHujin extends BukkitRunnable {
             armorStand.teleport(location);
 
             armorStand.getWorld().spawnParticle(Particle.SWEEP_ATTACK,location,5,0.5,0.5,0.5);
+            armorStand.getWorld().spawnParticle(Particle.DUST_COLOR_TRANSITION,location,10,1,0,1,new Particle.DustTransition(Color.GREEN,Color.LIME,1));
 
             @NotNull Collection<Player> getNearbyPlayers = armorStand.getWorld().getNearbyPlayers(location,1,1,1);
 

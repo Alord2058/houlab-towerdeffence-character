@@ -9,7 +9,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.Vector;
 
 import java.util.Set;
 
@@ -41,13 +40,11 @@ public class UltimateSkill implements Listener {
         int ultTimer = this.javaplugin.getConfig().getInt("kazenomatasaburou.ultTimer");
         int ultCT = this.javaplugin.getConfig().getInt("kazenomatasaburou.ultCT");
         int use_HujinCT = this.javaplugin.getConfig().getInt("kazenomatasaburou.use_HujinCT");
-        int vector_ratio = this.javaplugin.getConfig().getInt("kazenomatasaburou.vector_ratio");
 
         if (event.getHand() == EquipmentSlot.HAND) {
             if (event.getAction().isRightClick()) {
                 if (isBrush && player.getCooldown(getBrush) == 0 && !tag.contains("matasaburo_Ulting")) {
-                    Vector vector = player.getLocation().getDirection().multiply(1).setX(-vector_ratio*vx).setY(1).setZ(-vector_ratio*vz);
-                    player.setVelocity(vector);
+
                     player.setCooldown(getBrush, 10);
                     player.getWorld().spawnParticle(Particle.CRIT_MAGIC,player.getLocation(),25,0.5,0,0.5);
                     player.getWorld().spawnParticle(Particle.DUST_COLOR_TRANSITION,player.getLocation(),10,0.5,2,0.5,new Particle.DustTransition(Color.GREEN,Color.LIME,1));

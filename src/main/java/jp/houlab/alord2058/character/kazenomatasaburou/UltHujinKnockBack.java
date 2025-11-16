@@ -68,13 +68,13 @@ public class UltHujinKnockBack extends BukkitRunnable {
                 Player playerIterator = i.next().getPlayer();
                 if (playerIterator != null) {
                     if (playerIterator != player) {
-                        playerIterator.damage(10,player);
+                        playerIterator.damage(20,player);
                         playerIterator.getWorld().playSound(playerIterator.getLocation(),Sound.ENTITY_EVOKER_FANGS_ATTACK,1F,2F);
                         armorStand.remove();
                     }
 
                     if (playerIterator != player) {
-                        playerIterator.damage(10,player);
+                        playerIterator.damage(20,player);
                         playerIterator.getWorld().playSound(playerIterator.getLocation(),Sound.ENTITY_EVOKER_FANGS_ATTACK,1F,2F);
                         armorStand.remove();
                     }
@@ -96,32 +96,47 @@ public class UltHujinKnockBack extends BukkitRunnable {
                     Player playerIteratorKB = i.next().getPlayer();
 
                     if (playerIteratorKB != null) {
+                        String tranceETPlayer = String.valueOf(player.getScoreboard().getEntityTeam(player));
+                        String tranceETPlayerKB = String.valueOf(playerIteratorKB.getScoreboard().getEntityTeam(playerIteratorKB));
 
-                        double aSX = armorStand.getX();
-                        double aSZ = armorStand.getZ();
-                        double pIKBX = playerIteratorKB.getX();
-                        double pIKBZ = playerIteratorKB.getZ();
+                        if(!tranceETPlayer.equals(tranceETPlayerKB)) {
 
-                        double prePIKBvX = pIKBX-aSX;
-                        BigDecimal pIKBvXbd = new BigDecimal(String.valueOf(prePIKBvX));
-                        BigDecimal pIKBvXbd1 = pIKBvXbd.setScale(0, RoundingMode.UP);
-                        double pIKBvX = pIKBvXbd1.doubleValue();
-                        double pIKBvX1 = (1/pIKBvX)*1.5;
+                            player.sendMessage(String.valueOf(player.getScoreboard().getEntityTeam(player)));
+                            playerIteratorKB.sendMessage(String.valueOf(playerIteratorKB.getScoreboard().getEntityTeam(playerIteratorKB)));
+                            double aSX = armorStand.getX();
+                            double aSZ = armorStand.getZ();
+                            double pIKBX = playerIteratorKB.getX();
+                            double pIKBZ = playerIteratorKB.getZ();
 
-                        double prePIKBvZ = pIKBZ-aSZ;
-                        BigDecimal pIKBvZbd = new BigDecimal(String.valueOf(prePIKBvZ));
-                        BigDecimal pIKBvZbd1 = pIKBvZbd.setScale(0, RoundingMode.UP);
-                        double pIKBvZ = pIKBvZbd1.doubleValue();
-                        double pIKBvZ1 = (1/pIKBvZ)*1.5;
+                            double prePIKBvX = pIKBX - aSX;
+                            BigDecimal pIKBvXbd = new BigDecimal(String.valueOf(prePIKBvX));
+                            BigDecimal pIKBvXbd1 = pIKBvXbd.setScale(0, RoundingMode.UP);
+                            double pIKBvX = pIKBvXbd1.doubleValue();
+                            double pIKBvX1 = (1 / pIKBvX) * 8.0;
 
-                        player.getWorld().playSound(player.getLocation(),Sound.ENTITY_WARDEN_ATTACK_IMPACT,1F,1F);
-                        player.getWorld().playSound(player.getLocation(),Sound.ENTITY_DRAGON_FIREBALL_EXPLODE,1F,1.1F);
-                        Vector playerIteratorKBVec = playerIteratorKB.getLocation().getDirection().multiply(1).setX(pIKBvX1).setY(3.00).setZ(pIKBvZ1);
-                        playerIteratorKB.setVelocity(playerIteratorKBVec);
-                        armorStand.remove();
+                            double prePIKBvZ = pIKBZ - aSZ;
+                            BigDecimal pIKBvZbd = new BigDecimal(String.valueOf(prePIKBvZ));
+                            BigDecimal pIKBvZbd1 = pIKBvZbd.setScale(0, RoundingMode.UP);
+                            double pIKBvZ = pIKBvZbd1.doubleValue();
+                            double pIKBvZ1 = (1 / pIKBvZ) * 8.0;
 
+                            player.getWorld().playSound(player.getLocation(), Sound.ENTITY_WARDEN_ATTACK_IMPACT, 1F, 1F);
+                            player.getWorld().playSound(player.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1F, 1.1F);
+                            Vector playerIteratorKBVec = playerIteratorKB.getLocation().getDirection().multiply(1).setX(pIKBvX1).setY(1.00).setZ(pIKBvZ1);
+                            playerIteratorKB.setVelocity(playerIteratorKBVec);
+                            armorStand.remove();
 
-                        this.cancel();
+                            this.cancel();
+
+                        } else {
+                            player.sendMessage(String.valueOf(player.getScoreboard().getEntityTeam(player)));
+                            player.getWorld().playSound(player.getLocation(), Sound.ENTITY_WARDEN_ATTACK_IMPACT, 1F, 1F);
+                            player.getWorld().playSound(player.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1F, 1.1F);
+                            Vector playerIteratorKBVec = playerIteratorKB.getLocation().getDirection().multiply(1).setX(0).setY(2.00).setZ(0);
+                            playerIteratorKB.setVelocity(playerIteratorKBVec);
+                            armorStand.remove();
+                        }
+
                     } else {
                         armorStand.remove();
                         return;
