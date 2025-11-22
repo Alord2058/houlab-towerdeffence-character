@@ -68,16 +68,11 @@ public class UltHujinKnockBack extends BukkitRunnable {
                 Player playerIterator = i.next().getPlayer();
                 if (playerIterator != null) {
                     if (playerIterator != player) {
-                        playerIterator.damage(20,player);
+                        playerIterator.damage(10,player);
                         playerIterator.getWorld().playSound(playerIterator.getLocation(),Sound.ENTITY_EVOKER_FANGS_ATTACK,1F,2F);
                         armorStand.remove();
                     }
 
-                    if (playerIterator != player) {
-                        playerIterator.damage(20,player);
-                        playerIterator.getWorld().playSound(playerIterator.getLocation(),Sound.ENTITY_EVOKER_FANGS_ATTACK,1F,2F);
-                        armorStand.remove();
-                    }
                 } else {
                     armorStand.remove();
                     return;
@@ -128,7 +123,7 @@ public class UltHujinKnockBack extends BukkitRunnable {
                         } else {
                             player.getWorld().playSound(player.getLocation(), Sound.ENTITY_WARDEN_ATTACK_IMPACT, 1F, 1F);
                             player.getWorld().playSound(player.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1F, 1.1F);
-                            Vector playerIteratorKBVec = playerIteratorKB.getLocation().getDirection().multiply(1).setX(0).setY(2.00).setZ(0);
+                            Vector playerIteratorKBVec = playerIteratorKB.getLocation().getDirection().multiply(1).setX(0).setY(3.49).setZ(0);
                             playerIteratorKB.setVelocity(playerIteratorKBVec);
                             armorStand.remove();
                         }

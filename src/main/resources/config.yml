@@ -8,7 +8,7 @@ kazenomatasaburou:
   rechargeEnergyCT: 40
   minEnergy: 20
   ultHeight: 1.90
-  ultTimer: 110
+  ultTimer: 150
   ultCT: 1800
   use_HujinCT: 10
 

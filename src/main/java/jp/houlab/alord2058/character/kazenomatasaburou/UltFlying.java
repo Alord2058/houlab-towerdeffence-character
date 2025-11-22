@@ -37,7 +37,7 @@ public class UltFlying extends BukkitRunnable {
         if (ultCount <= timer && ultCount >= timer - 10) {
             ultCount--;
 
-        } else if (timer - 10 <= 100 && ultCount > 0) {
+        } else if (timer - 10 <= 150 && ultCount > 0) {
             ultCount--;
             player.getWorld().spawnParticle(Particle.DUST_COLOR_TRANSITION, player.getLocation(), 5, 0.2, -0.2, 0.2, new Particle.DustTransition(Color.GREEN, Color.LIME, 1));
 

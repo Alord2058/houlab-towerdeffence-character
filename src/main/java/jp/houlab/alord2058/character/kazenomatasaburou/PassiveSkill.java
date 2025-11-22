@@ -40,33 +40,39 @@ public class PassiveSkill implements Listener {
                     int playerCurrentEnergy = player.getLevel();
                     boolean isGliding = player.isGliding();
 
-                    if (isGliding) {
-                        if (!tag.contains("glidingFlag")) {
-                            player.addScoreboardTag("glidingFlag");
-                        }
-
-                        if(equipElytra.equals(Material.ELYTRA)) {
-                            if (playerCurrentEnergy >= 81) {
-                                player.setLevel(80);
-                                player.setLevel(playerCurrentEnergy - decreaseEnergy);
-                                player.setExp((float) playerCurrentEnergy / maxEnergy);
-
-                            } else if (playerCurrentEnergy > 0){
-                                player.setLevel(playerCurrentEnergy - decreaseEnergy);
-                                player.setExp((float) playerCurrentEnergy/maxEnergy);
-
-                            } else if (playerCurrentEnergy == 0) {
-                                player.removeScoreboardTag("glidingFlag");
-                                player.setLevel(0);
-                                player.setExp(0);
-                                player.setGliding(false);
-                                player.setCooldown(Material.ELYTRA,40);
-                                new PassiveGlidingControl(player).runTaskTimer(javaplugin, 0, 1);
-                            }
-                        }
+                    if(tag.contains("matasaburo_Ulting")) {
+                        player.setLevel(80);
+                        player.setExp(1);
 
                     } else {
-                        this.cancel();
+                        if (isGliding) {
+                            if (!tag.contains("glidingFlag")) {
+                                player.addScoreboardTag("glidingFlag");
+                            }
+
+                            if(equipElytra.equals(Material.ELYTRA)) {
+                                if (playerCurrentEnergy >= 81) {
+                                    player.setLevel(80);
+                                    player.setLevel(playerCurrentEnergy - decreaseEnergy);
+                                    player.setExp((float) playerCurrentEnergy / maxEnergy);
+
+                                } else if (playerCurrentEnergy > 0){
+                                    player.setLevel(playerCurrentEnergy - decreaseEnergy);
+                                    player.setExp((float) playerCurrentEnergy/maxEnergy);
+
+                                } else if (playerCurrentEnergy == 0) {
+                                    player.removeScoreboardTag("glidingFlag");
+                                    player.setLevel(0);
+                                    player.setExp(0);
+                                    player.setGliding(false);
+                                    player.setCooldown(Material.ELYTRA,40);
+                                    new PassiveGlidingControl(player).runTaskTimer(javaplugin, 0, 1);
+                                }
+                            }
+
+                        } else {
+                            this.cancel();
+                        }
                     }
                 }
             }.runTaskTimer(javaplugin, 0, 1);

@@ -65,14 +65,8 @@ public class UltHujin extends BukkitRunnable {
                 Player playerIterator = i.next().getPlayer();
                 if (playerIterator != null) {
                     if (playerIterator != player) {
-                        playerIterator.damage(20,player);
+                        playerIterator.damage(10,player);
                         playerIterator.getWorld().playSound(playerIterator.getLocation(), Sound.ENTITY_EVOKER_FANGS_ATTACK,1F,2F);
-                        armorStand.remove();
-                    }
-
-                    if (playerIterator != player) {
-                        playerIterator.damage(20,player);
-                        playerIterator.getWorld().playSound(playerIterator.getLocation(),Sound.ENTITY_EVOKER_FANGS_ATTACK,1F,2F);
                         armorStand.remove();
                     }
 
